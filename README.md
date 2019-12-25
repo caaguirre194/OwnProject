@@ -1,2 +1,3 @@
-# ApiRest
-API REST in Spring 
+# Proyect
+API REST in Spring Boot
+Frontend in Angular
