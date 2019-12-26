@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class GenericServiceImpl<T,ID extends Serializable> implements GenericService <T,ID>{
+public abstract class GenericServiceImpl<T,ID extends Serializable> implements IGenericService<T,ID> {
 
     @Override
     public T save(T entity) {
