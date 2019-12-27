@@ -4,10 +4,15 @@ import com.caaguirre.model.Person;
 import com.caaguirre.model.Rol;
 import com.caaguirre.model.Status;
 import com.caaguirre.model.User;
+import com.caaguirre.service.IPersonService;
+import com.caaguirre.service.IRolService;
+import com.caaguirre.service.IStatusService;
 import com.caaguirre.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -16,16 +21,26 @@ import java.util.List;
 public class UserRestController {
 
     @Autowired
-    private IUserService personaService;
+    private IUserService userService;
+
+    @Autowired
+    private IPersonService personService;
+
+    @Autowired
+    private IRolService rolService;
+
+    @Autowired
+    private IStatusService statusService;
+
 
     @GetMapping(value = "/all")
     public List<User> getAll(){
-        return personaService.getAll();
+        return userService.getAll();
     }
 
     @GetMapping(value = "/find/{id}")
     public User find(@PathVariable Long id) {
-        return personaService.get(id);
+        return userService.get(id);
     }
 
     public User saveUser(User user) {
@@ -57,21 +72,36 @@ public class UserRestController {
     @PostMapping(value = "/save")
     public ResponseEntity<User> save(@RequestBody User user){
 
-        User obj = personaService.get(user.getId_user());
+        Person person = personService.get(user.getPerson().getId_person());
+        if (person == null) {
+            person = personService.save(user.getPerson());
+        }
+        Status status = statusService.get(user.getStatus().getId_status());
+        if (status == null) {
+            status = statusService.save(user.getStatus());
+        }
+        Rol rol = rolService.get(user.getRol().getId_rol());
+        if (rol == null) {
+            rol = rolService.save(user.getRol());
+        }
+        userService.save(user);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+
+       /* User obj = personaService.get(user.getId_user());
 
         if (obj == null) {
             obj = personaService.save(saveUser(user));
         }else{
             obj = personaService.save(user);
         }
-        return new ResponseEntity<User>(obj, HttpStatus.OK);
+        return new ResponseEntity<User>(obj, HttpStatus.OK);*/
     }
 
     @GetMapping(value = "/delete/{id}")
     public ResponseEntity<User> delete(@PathVariable Long id){
-        User user = personaService.get(id);
+        User user = userService.get(id);
         if(user != null) {
-            personaService.delete(id);
+            userService.delete(id);
         }else {
             return new ResponseEntity<User>(user, HttpStatus.INTERNAL_SERVER_ERROR);
         }

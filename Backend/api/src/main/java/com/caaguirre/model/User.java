@@ -22,7 +22,7 @@ public class User {
 
     @Column
     @Basic(optional = false)
-    //@XmlTransient
+    @XmlTransient
     //@com.fasterxml.jackson.annotation.JsonIgnore
     private String password;
 
@@ -31,7 +31,7 @@ public class User {
     @JoinColumn(name = "status", referencedColumnName = "id_status")
     @ManyToOne(optional = false,cascade=CascadeType.ALL)
     //@JsonIgnore
-    //@XmlTransient
+    @XmlTransient
     private Status status;
 
     //@ManyToOne( cascade = CascadeType.ALL,targetEntity = Rol.class)
@@ -39,7 +39,7 @@ public class User {
     @JoinColumn(name = "rol", referencedColumnName = "id_rol")
     @ManyToOne(optional = false,cascade=CascadeType.ALL)
     //@JsonIgnore
-    //@XmlTransient
+    @XmlTransient
     private Rol rol;
 
     //@ManyToOne( cascade = CascadeType.ALL,targetEntity = Person.class)
