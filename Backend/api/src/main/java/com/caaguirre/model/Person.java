@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,8 +16,8 @@ public class Person {
 
     @Id
     @Basic(optional = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name = "id_rol", unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sec_person")
+    @SequenceGenerator(name="sec_person", sequenceName = "sec_person", allocationSize=1)
     @Column(unique = true)
     private Long id_person;
 
@@ -31,6 +32,9 @@ public class Person {
 
     @Column
     private String phone;
+
+    @Column
+    private Date date_birth;
 
     @JsonIgnore
     @XmlTransient
@@ -50,6 +54,14 @@ public class Person {
         this.lastname = lastname;
         this.address = address;
         this.phone = phone;
+    }
+
+    public Date getDate_birth() {
+        return date_birth;
+    }
+
+    public void setDate_birth(Date date_birth) {
+        this.date_birth = date_birth;
     }
 
     public List<User> getUserList() {

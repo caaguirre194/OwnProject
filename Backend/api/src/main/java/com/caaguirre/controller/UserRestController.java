@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/v1/")
+@RequestMapping(value = "/v1/users")
 public class UserRestController {
 
     @Autowired
@@ -43,32 +43,6 @@ public class UserRestController {
         return userService.get(id);
     }
 
-    public User saveUser(User user) {
-        User newUser = new User();
-        newUser.setId_user((long) 2);
-        newUser.setEmail("new email");
-        Rol rol = new Rol();
-        rol.setId_rol((long) 1);
-        rol.setName("ACTIVE");
-        rol.setDescription("El usuario se encuentra actualmente habilitado.");
-        newUser.setRol(rol);
-        Person person = new Person();
-        person.setId_person((long)1);
-        person.setLastname("new lastname");
-        person.setName("new name");
-        person.setAddress("new address");
-        person.setPhone("new phone");
-        newUser.setPerson(person);
-        newUser.setUsername("new username");
-        newUser.setPassword("new password");
-        Status status = new Status();
-        status.setId_status((long) 1);
-        status.setName("READONLY");
-        status.setDescription("Rol de solo lectura.");
-        newUser.setStatus(status);
-        return newUser;
-    }
-
     @PostMapping(value = "/save")
     public ResponseEntity<User> save(@RequestBody User user){
 
@@ -84,17 +58,12 @@ public class UserRestController {
         if (rol == null) {
             rol = rolService.save(user.getRol());
         }
-        userService.save(user);
-        return new ResponseEntity<User>(user, HttpStatus.OK);
 
-       /* User obj = personaService.get(user.getId_user());
-
-        if (obj == null) {
-            obj = personaService.save(saveUser(user));
-        }else{
-            obj = personaService.save(user);
+        if (user.getId_user() == null) {
+            user.setId_user((long) 0);
         }
-        return new ResponseEntity<User>(obj, HttpStatus.OK);*/
+        User obj = userService.save(user);
+        return new ResponseEntity<User>(obj, HttpStatus.OK);
     }
 
     @GetMapping(value = "/delete/{id}")

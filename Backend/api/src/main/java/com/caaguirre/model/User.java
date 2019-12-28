@@ -10,7 +10,8 @@ import javax.xml.bind.annotation.XmlTransient;
 public class User {
     @Id
     @Basic(optional = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sec_user")
+    @SequenceGenerator(name="sec_user", sequenceName = "sec_user", allocationSize=1)
     @Column(unique = true)
     private Long id_user;
 
@@ -29,7 +30,7 @@ public class User {
     //@ManyToOne(cascade = CascadeType.ALL,targetEntity = Status.class)
     //@JoinColumn(name = "status", insertable = false, updatable = false,nullable = false)
     @JoinColumn(name = "status", referencedColumnName = "id_status")
-    @ManyToOne(optional = false,cascade=CascadeType.ALL)
+    @ManyToOne(optional = false,cascade=CascadeType.PERSIST)
     //@JsonIgnore
     @XmlTransient
     private Status status;
@@ -37,7 +38,7 @@ public class User {
     //@ManyToOne( cascade = CascadeType.ALL,targetEntity = Rol.class)
     //@JoinColumn(name="rol", insertable = false, updatable = false,nullable = false)
     @JoinColumn(name = "rol", referencedColumnName = "id_rol")
-    @ManyToOne(optional = false,cascade=CascadeType.ALL)
+    @ManyToOne(optional = false,cascade=CascadeType.PERSIST)
     //@JsonIgnore
     @XmlTransient
     private Rol rol;
@@ -45,7 +46,7 @@ public class User {
     //@ManyToOne( cascade = CascadeType.ALL,targetEntity = Person.class)
     //@JoinColumn(name="person", insertable = false, updatable = false,nullable = false)
     @JoinColumn(name = "person", referencedColumnName = "id_person")
-    @ManyToOne(optional = false,cascade=CascadeType.ALL)
+    @ManyToOne(optional = false,cascade=CascadeType.PERSIST)
    // @JsonIgnore
    // @XmlTransient
     private Person person;

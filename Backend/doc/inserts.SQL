@@ -19,7 +19,12 @@ INSERT INTO public.rol(
 
 INSERT INTO public.person(
 	id_person, "name", lastname, address, phone, date_birth)
-	VALUES (1, 'carlos', 'Aguirre', 'cc', '3105638030','2016-06-22 19:10:25-07');
+	VALUES (1, 'Carlos', 'Aguirre', 'cc', '3105638030','2016-06-22 19:10:25-07');
+
+INSERT INTO public.person(
+	id_person, "name", lastname, address, phone, date_birth)
+	VALUES (2, 'Pepe', 'Aguirre', 'cc', '3105638030','2016-06-22 19:10:25-07');
+
 
 INSERT INTO public."user"(
 	id_user, rol, status, person, username, email, "password")
