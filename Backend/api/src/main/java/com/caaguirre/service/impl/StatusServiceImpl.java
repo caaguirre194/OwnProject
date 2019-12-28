@@ -20,8 +20,4 @@ public class StatusServiceImpl extends GenericServiceImpl<Status, Long> implemen
         return statusRepository;
     }
 
-    @Override
-    public Status save(Status status) {
-        return statusRepository.save(status);
-    }
 }

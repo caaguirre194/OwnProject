@@ -20,9 +20,4 @@ public class RolServiceImpl extends GenericServiceImpl<Rol, Long> implements IRo
         return rolRepository;
     }
 
-    @Override
-    public Rol save(Rol rol) {
-        return rolRepository.save(rol);
-    }
-
 }

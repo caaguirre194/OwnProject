@@ -18,11 +18,6 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements I
     private IUserRepository userRepository;
 
     @Override
-    public User save(User user) {
-        return userRepository.save(user);
-    }
-
-    @Override
     public CrudRepository<User, Long> getDao() {
         return userRepository;
     }

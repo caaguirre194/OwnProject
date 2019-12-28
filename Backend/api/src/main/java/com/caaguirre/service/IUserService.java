@@ -5,5 +5,4 @@ import com.caaguirre.model.User;
 import org.springframework.stereotype.Service;
 
 public interface IUserService extends IGenericService<User, Long>{
-    User save(User user);
 }
