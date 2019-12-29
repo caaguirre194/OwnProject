@@ -1,4 +1,4 @@
-package com.caaguirre.security;
+package com.caaguirre.security.model;
 
 public class JwtUser {
 

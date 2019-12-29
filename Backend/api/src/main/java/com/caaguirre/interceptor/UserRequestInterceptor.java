@@ -1,8 +1,8 @@
 package com.caaguirre.interceptor;
 
 import com.caaguirre.constant.ConstantJWT;
-import com.caaguirre.security.JwtUser;
-import com.caaguirre.security.JwtValidator;
+import com.caaguirre.security.model.JwtUser;
+import com.caaguirre.security.model.JwtValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
@@ -20,14 +20,11 @@ public class UserRequestInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
         String header = request.getHeader(ConstantJWT.AUTHORIZATION_HEADER);
-
         if (header != null && header.startsWith(ConstantJWT.BEARER_TOKEN)) {
             String authenticationHeader = header.substring(7);
             this.jwtUser = validator.validate(authenticationHeader);
         }
-
         return true;
     }
 

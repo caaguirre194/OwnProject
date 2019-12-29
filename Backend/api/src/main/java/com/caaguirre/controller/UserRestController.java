@@ -59,7 +59,6 @@ public class UserRestController {
             //Exception rol no registrado
             rol = rolService.save(user.getRol());
         }
-
         if (user.getId_user() == null) {
             user.setId_user((long) 0);
         }

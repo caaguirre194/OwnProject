@@ -1,4 +1,4 @@
-package com.caaguirre.security;
+package com.caaguirre.security.model;
 
 import com.caaguirre.constant.ConstantJWT;
 import io.jsonwebtoken.Claims;
