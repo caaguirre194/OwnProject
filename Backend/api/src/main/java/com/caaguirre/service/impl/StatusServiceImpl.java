@@ -2,7 +2,6 @@ package com.caaguirre.service.impl;
 
 import com.caaguirre.commons.GenericServiceImpl;
 import com.caaguirre.model.Status;
-import com.caaguirre.model.User;
 import com.caaguirre.repository.IStatusRepository;
 import com.caaguirre.service.IStatusService;
 import org.springframework.beans.factory.annotation.Autowired;

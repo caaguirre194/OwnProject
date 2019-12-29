@@ -2,7 +2,6 @@ package com.caaguirre.service.impl;
 
 import com.caaguirre.commons.GenericServiceImpl;
 import com.caaguirre.model.Rol;
-import com.caaguirre.model.User;
 import com.caaguirre.repository.IRolRepository;
 import com.caaguirre.service.IRolService;
 import org.springframework.beans.factory.annotation.Autowired;
