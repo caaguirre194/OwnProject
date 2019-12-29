@@ -1,6 +1,6 @@
 package com.caaguirre.service.impl;
 
-import com.caaguirre.commons.GenericServiceImpl;
+import com.caaguirre.common.GenericServiceImpl;
 import com.caaguirre.model.Person;
 import com.caaguirre.repository.IPersonRepository;
 import com.caaguirre.service.IPersonService;

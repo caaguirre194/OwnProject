@@ -1,4 +1,4 @@
-package com.caaguirre.commons;
+package com.caaguirre.common;
 
 import java.io.Serializable;
 import java.util.List;

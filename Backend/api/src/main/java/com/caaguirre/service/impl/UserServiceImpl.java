@@ -1,6 +1,6 @@
 package com.caaguirre.service.impl;
 
-import com.caaguirre.commons.GenericServiceImpl;
+import com.caaguirre.common.GenericServiceImpl;
 import com.caaguirre.model.User;
 import com.caaguirre.repository.IUserRepository;
 import com.caaguirre.service.IUserService;

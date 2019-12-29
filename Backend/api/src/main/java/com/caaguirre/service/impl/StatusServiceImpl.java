@@ -1,6 +1,6 @@
 package com.caaguirre.service.impl;
 
-import com.caaguirre.commons.GenericServiceImpl;
+import com.caaguirre.common.GenericServiceImpl;
 import com.caaguirre.model.Status;
 import com.caaguirre.repository.IStatusRepository;
 import com.caaguirre.service.IStatusService;

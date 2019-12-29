@@ -28,7 +28,6 @@ public class PersonRestController {
 
     @PostMapping(value = "/save")
     public ResponseEntity<Person> save(@RequestBody Person person){
-
         if (person.getId_person() == null) {
             person.setId_person((long) 0);
         }

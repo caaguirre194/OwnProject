@@ -46,20 +46,26 @@ public class UserRestController {
 
         Person person = personService.get(user.getPerson().getId_person());
         if (person == null) {
+            // Exception persona no registrada
             person = personService.save(user.getPerson());
         }
         Status status = statusService.get(user.getStatus().getId_status());
         if (status == null) {
+            // Exception status no registrado
             status = statusService.save(user.getStatus());
         }
         Rol rol = rolService.get(user.getRol().getId_rol());
         if (rol == null) {
+            //Exception rol no registrado
             rol = rolService.save(user.getRol());
         }
 
         if (user.getId_user() == null) {
             user.setId_user((long) 0);
         }
+        user.setPerson(person);
+        user.setStatus(status);
+        user.setRol(rol);
         User obj = userService.save(user);
         return new ResponseEntity<User>(obj, HttpStatus.OK);
     }

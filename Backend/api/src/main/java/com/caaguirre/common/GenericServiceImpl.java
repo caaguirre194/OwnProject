@@ -1,4 +1,4 @@
-package com.caaguirre.commons;
+package com.caaguirre.common;
 
 import org.springframework.data.repository.CrudRepository;
 
