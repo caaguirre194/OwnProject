@@ -1,4 +1,4 @@
-package com.caaguirre.controller;
+package com.caaguirre.controller.rest;
 
 import com.caaguirre.model.Person;
 import com.caaguirre.service.IPersonService;
