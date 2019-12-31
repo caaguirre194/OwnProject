@@ -1,6 +1,6 @@
 package com.caaguirre.exception.model;
 
-public class ExceptionUserConstant {
+public class UserConstantException {
 
     public static final String KEY_MESSAGE_EXCEPTION_EMAIL_IS_REGISTER = "user.is.exist.email";
     public static final int CODE_MESSAGE_EXCEPTION_EMAIL_IS_REGISTER = 1;

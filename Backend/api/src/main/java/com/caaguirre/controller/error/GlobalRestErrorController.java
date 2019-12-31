@@ -1,6 +1,6 @@
 package com.caaguirre.controller.error;
 
-import com.caaguirre.exception.model.UserNullFieldException;
+import com.caaguirre.exception.model.ApiException;
 import com.caaguirre.exception.web.ApiMessage;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.core.Ordered;
@@ -57,13 +57,13 @@ public class GlobalRestErrorController extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(apiMessage.getStatus()).body(apiMessage);
     }
 
-    @ExceptionHandler({UserNullFieldException.class})
-    protected ResponseEntity<Object> handleUserNullFieldException(UserNullFieldException ex, WebRequest request) {
+    @ExceptionHandler({ApiException.class})
+    protected ResponseEntity<Object> handleApiException(ApiException ex, WebRequest request) {
         ApiMessage apiMessage = new ApiMessage();
-        apiMessage.setCode(HttpStatus.BAD_REQUEST.value());
+        apiMessage.setCode(ex.getStatus().value());
         apiMessage.setMessage(ex.getMessage());
         apiMessage.setDebugMessage(ex.getLocalizedMessage());
-        apiMessage.setStatus(HttpStatus.BAD_REQUEST);
+        apiMessage.setStatus(ex.getStatus());
         apiMessage.setMethod(((ServletWebRequest) request).getHttpMethod().name());
         apiMessage.setPath((((ServletWebRequest) request).getRequest().getRequestURI().toString()));
         return ResponseEntity.status(apiMessage.getStatus()).body(apiMessage);

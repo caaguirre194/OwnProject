@@ -1,6 +1,6 @@
 package com.caaguirre.controller.rest;
 
-import com.caaguirre.exception.model.UserNullFieldException;
+import com.caaguirre.exception.model.ApiException;
 import com.caaguirre.model.Person;
 import com.caaguirre.model.Rol;
 import com.caaguirre.model.Status;
@@ -49,17 +49,17 @@ public class UserRestController {
     }
 
     @PostMapping(value = "/update")
-    public ResponseEntity<Object> update(@RequestBody User user) throws UserNullFieldException {
+    public ResponseEntity<Object> update(@RequestBody User user) throws ApiException {
 
         if (user.getUsername() == null)
-            throw new UserNullFieldException("El campo 'username' es NULL");
+            throw new ApiException(HttpStatus.BAD_REQUEST, "El campo 'username' es NULL");
         if (user.getPassword() == null)
-            throw new UserNullFieldException("El campo 'password' es NULL");
+            throw new ApiException(HttpStatus.BAD_REQUEST, "El campo 'password' es NULL");
         if (user.getEmail() == null)
-            throw new UserNullFieldException("El campo 'email' es NULL");
+            throw new ApiException(HttpStatus.BAD_REQUEST, "El campo 'email' es NULL");
 
         if (user.getPerson() == null)
-            throw new UserNullFieldException("El campo 'person' es NULL");
+            throw new ApiException(HttpStatus.BAD_REQUEST, "El campo 'person' es NULL");
         Person person  = personService.get(user.getPerson().getId_person());
         if (person == null) {
             // Exception persona no registrada
@@ -67,7 +67,7 @@ public class UserRestController {
         }
 
         if (user.getStatus() == null)
-            throw new UserNullFieldException("El campo 'status' es NULL");
+            throw new ApiException(HttpStatus.BAD_REQUEST, "El campo 'status' es NULL");
         Status status = statusService.get(user.getStatus().getId_status());
         if (status == null) {
             // Exception status no registrado
@@ -75,7 +75,7 @@ public class UserRestController {
         }
 
         if (user.getRol() == null)
-            throw new UserNullFieldException("El campo 'rol' es NULL");
+            throw new ApiException(HttpStatus.BAD_REQUEST, "El campo 'rol' es NULL");
         Rol rol = rolService.get(user.getRol().getId_rol());
         if (rol == null) {
             //Exception rol no registrado
