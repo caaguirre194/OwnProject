@@ -5,13 +5,10 @@ import com.caaguirre.model.Person;
 import com.caaguirre.model.Rol;
 import com.caaguirre.model.Status;
 import com.caaguirre.model.User;
-import com.caaguirre.security.model.JwtValidator;
 import com.caaguirre.service.IPersonService;
 import com.caaguirre.service.IRolService;
 import com.caaguirre.service.IStatusService;
 import com.caaguirre.service.IUserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +19,6 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/v1/users")
 public class UserRestController {
-
-    private static Logger LOG = LoggerFactory.getLogger(JwtValidator.class);
 
     @Autowired
     private IUserService userService;
@@ -130,6 +125,21 @@ public class UserRestController {
             return new ResponseEntity<Object>(user, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<Object>(user,HttpStatus.OK);
+    }
+
+   /* @GetMapping(value = "/login")
+    public ResponseEntity<Object> login(@PathVariable Login login){
+        return new ResponseEntity<Object>(null,HttpStatus.OK);
+    }*/
+
+    @GetMapping(value = "/updatePassword")
+    public ResponseEntity<Object> updatePassword(@PathVariable Long id){
+        return new ResponseEntity<Object>(null,HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/restorePassword")
+    public ResponseEntity<Object> restorePassword(@PathVariable String password){
+        return new ResponseEntity<Object>(null,HttpStatus.OK);
     }
 
 }
