@@ -1,5 +1,6 @@
 package com.caaguirre.controller.rest;
 
+import com.caaguirre.exception.web.ApiError;
 import com.caaguirre.model.Person;
 import com.caaguirre.model.Rol;
 import com.caaguirre.model.Status;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.ServletWebRequest;
+
 import java.util.List;
 
 @RestController
@@ -22,10 +25,6 @@ import java.util.List;
 public class UserRestController {
 
     private static Logger LOG = LoggerFactory.getLogger(JwtValidator.class);
-    public static final String CREATE_USER_URI = "";
-    public static final String LOGIN_USER_URI = "login";
-    //public static final String RESTORE_PASSWORD_USER_URI = "/pwd/update";
-    public static final String UPDATE_PASSWORD_USER_URI = "/pwd/restore";
 
     @Autowired
     private IUserService userService;
@@ -46,18 +45,18 @@ public class UserRestController {
     }
 
     @GetMapping(value = "/find/{id}")
-    public User find(@PathVariable Long id) {
+    public Object find(@PathVariable Long id) {
         return userService.get(id);
     }
 
     @PostMapping(value = "/save")
-    public ResponseEntity<User> save(@RequestBody User user){
+    public ResponseEntity<Object> save(@RequestBody User user){
+         Person person  = personService.get(user.getPerson().getId_person());
+         if (person == null) {
+             // Exception persona no registrada
+             person = personService.save(user.getPerson());
+         }
 
-            Person person = personService.get(user.getPerson().getId_person());
-            if (person == null) {
-                // Exception persona no registrada
-                person = personService.save(user.getPerson());
-            }
             Status status = statusService.get(user.getStatus().getId_status());
             if (status == null) {
                 // Exception status no registrado
@@ -76,18 +75,18 @@ public class UserRestController {
             user.setRol(rol);
             User obj = userService.save(user);
 
-        return new ResponseEntity<User>(obj, HttpStatus.OK);
+        return new ResponseEntity<Object>(obj, HttpStatus.OK);
     }
 
     @GetMapping(value = "/delete/{id}")
-    public ResponseEntity<User> delete(@PathVariable Long id){
+    public ResponseEntity<Object> delete(@PathVariable Long id){
         User user = userService.get(id);
         if(user != null) {
             userService.delete(id);
         }else {
-            return new ResponseEntity<User>(user, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Object>(user, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<User>(user,HttpStatus.OK);
+        return new ResponseEntity<Object>(user,HttpStatus.OK);
     }
 
 }

@@ -15,7 +15,8 @@ public class ApiError {
     private String message;
     private String debugMessage;
     private String method;
-    private List<ApiSubError> subErrors;
+    private String path;
+    private List<String> subErrors;
 
     public ApiError() {
         timestamp = LocalDateTime.now();
@@ -24,11 +25,13 @@ public class ApiError {
     public ApiError(HttpStatus status) {
         this();
         this.status = status;
+        this.code = status.value();
     }
 
     public ApiError(HttpStatus status, Throwable ex) {
         this();
         this.status = status;
+        this.code = status.value();
         this.message = "Unexpected error";
         this.debugMessage = ex.getLocalizedMessage();
     }
@@ -36,8 +39,10 @@ public class ApiError {
     public ApiError(HttpStatus status, String message, Throwable ex) {
         this();
         this.status = status;
+        this.code = status.value();
         this.message = message;
         this.debugMessage = ex.getLocalizedMessage();
+
     }
 
     public HttpStatus getStatus() {
@@ -64,11 +69,11 @@ public class ApiError {
         this.method = method;
     }
 
-    public List<ApiSubError> getSubErrors() {
+    public List<String> getSubErrors() {
         return subErrors;
     }
 
-    public void setSubErrors(List<ApiSubError> subErrors) {
+    public void setSubErrors(List<String> subErrors) {
         this.subErrors = subErrors;
     }
 
@@ -94,6 +99,14 @@ public class ApiError {
 
     public void setCode(int code) {
         this.code = code;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
 }
