@@ -35,6 +35,15 @@ public class PersonRestController {
         return new ResponseEntity<Person>(obj, HttpStatus.OK);
     }
 
+    @PostMapping(value = "/update")
+    public ResponseEntity<Person> update(@RequestBody Person person){
+        if (person.getId_person() == null) {
+            person.setId_person((long) 0);
+        }
+        Person obj = personService.save(person);
+        return new ResponseEntity<Person>(obj, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/delete/{id}")
     public ResponseEntity<Person> delete(@PathVariable Long id){
         Person person = personService.get(id);

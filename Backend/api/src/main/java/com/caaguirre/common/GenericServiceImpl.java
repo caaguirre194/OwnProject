@@ -15,6 +15,11 @@ public abstract class GenericServiceImpl<T,ID extends Serializable> implements I
     }
 
     @Override
+    public T update(T entity) {
+        return getDao().save(entity);
+    }
+
+    @Override
     public void delete(ID id) {
         getDao().deleteById(id);
     }

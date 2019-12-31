@@ -3,10 +3,12 @@ package com.caaguirre.exception.web;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.http.HttpStatus;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class ApiError {
+@XmlRootElement(name = "error")
+public class ApiMessage {
 
     private HttpStatus status;
     private int code;
@@ -18,17 +20,17 @@ public class ApiError {
     private String path;
     private List<String> subErrors;
 
-    public ApiError() {
+    public ApiMessage() {
         timestamp = LocalDateTime.now();
     }
 
-    public ApiError(HttpStatus status) {
+    public ApiMessage(HttpStatus status) {
         this();
         this.status = status;
         this.code = status.value();
     }
 
-    public ApiError(HttpStatus status, Throwable ex) {
+    public ApiMessage(HttpStatus status, Throwable ex) {
         this();
         this.status = status;
         this.code = status.value();
@@ -36,7 +38,7 @@ public class ApiError {
         this.debugMessage = ex.getLocalizedMessage();
     }
 
-    public ApiError(HttpStatus status, String message, Throwable ex) {
+    public ApiMessage(HttpStatus status, String message, Throwable ex) {
         this();
         this.status = status;
         this.code = status.value();

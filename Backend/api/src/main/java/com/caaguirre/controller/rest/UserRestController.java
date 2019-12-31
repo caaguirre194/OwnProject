@@ -1,6 +1,6 @@
 package com.caaguirre.controller.rest;
 
-import com.caaguirre.exception.web.ApiError;
+import com.caaguirre.exception.model.UserNullFieldException;
 import com.caaguirre.model.Person;
 import com.caaguirre.model.Rol;
 import com.caaguirre.model.Status;
@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.ServletWebRequest;
 
 import java.util.List;
 
@@ -47,6 +46,50 @@ public class UserRestController {
     @GetMapping(value = "/find/{id}")
     public Object find(@PathVariable Long id) {
         return userService.get(id);
+    }
+
+    @PostMapping(value = "/update")
+    public ResponseEntity<Object> update(@RequestBody User user) throws UserNullFieldException {
+
+        if (user.getUsername() == null)
+            throw new UserNullFieldException("El campo 'username' es NULL");
+        if (user.getPassword() == null)
+            throw new UserNullFieldException("El campo 'password' es NULL");
+        if (user.getEmail() == null)
+            throw new UserNullFieldException("El campo 'email' es NULL");
+
+        if (user.getPerson() == null)
+            throw new UserNullFieldException("El campo 'person' es NULL");
+        Person person  = personService.get(user.getPerson().getId_person());
+        if (person == null) {
+            // Exception persona no registrada
+            person = personService.save(user.getPerson());
+        }
+
+        if (user.getStatus() == null)
+            throw new UserNullFieldException("El campo 'status' es NULL");
+        Status status = statusService.get(user.getStatus().getId_status());
+        if (status == null) {
+            // Exception status no registrado
+            status = statusService.save(user.getStatus());
+        }
+
+        if (user.getRol() == null)
+            throw new UserNullFieldException("El campo 'rol' es NULL");
+        Rol rol = rolService.get(user.getRol().getId_rol());
+        if (rol == null) {
+            //Exception rol no registrado
+            rol = rolService.save(user.getRol());
+        }
+        if (user.getId_user() == null) {
+            user.setId_user((long) 0);
+        }
+        user.setPerson(person);
+        user.setStatus(status);
+        user.setRol(rol);
+        User obj = userService.save(user);
+
+        return new ResponseEntity<Object>(obj, HttpStatus.OK);
     }
 
     @PostMapping(value = "/save")
