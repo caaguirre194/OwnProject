@@ -1,12 +1,15 @@
 package com.caaguirre.controller.security;
 
-
+import com.caaguirre.model.exception.ApiException;
+import com.caaguirre.model.exception.UserConstantException;
 import com.caaguirre.model.security.JwtRequest;
 import com.caaguirre.model.security.JwtResponse;
 import com.caaguirre.security.JwtTokenUtil;
+import com.caaguirre.service.IMessageManagerService;
 import com.caaguirre.service.security.JwtUserDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -28,6 +31,9 @@ public class JwtAuthenticationController {
     @Autowired
     private JwtUserDetailsService userDetailsService;
 
+    @Autowired
+    IMessageManagerService messageManagerService;
+
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
@@ -45,9 +51,9 @@ public class JwtAuthenticationController {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
+            throw new ApiException(HttpStatus.UNAUTHORIZED, messageManagerService.getValue(UserConstantException.KEY_USER_DISABLED));
         } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
+            throw new ApiException(HttpStatus.UNAUTHORIZED, messageManagerService.getValue(UserConstantException.KEY_USER_INVALID_CREDENTIALS));
         }
     }
 

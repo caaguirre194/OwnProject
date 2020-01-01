@@ -19,4 +19,18 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements I
         return userRepository;
     }
 
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User save(User entity) {
+        return super.save(entity);
+    }
 }

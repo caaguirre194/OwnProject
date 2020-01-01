@@ -1,14 +1,12 @@
 package com.caaguirre.controller.rest;
 
-import com.caaguirre.exception.model.ApiException;
+import com.caaguirre.model.exception.ApiException;
 import com.caaguirre.model.Person;
 import com.caaguirre.model.Rol;
 import com.caaguirre.model.Status;
 import com.caaguirre.model.User;
-import com.caaguirre.service.IPersonService;
-import com.caaguirre.service.IRolService;
-import com.caaguirre.service.IStatusService;
-import com.caaguirre.service.IUserService;
+import com.caaguirre.model.exception.UserConstantException;
+import com.caaguirre.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +30,8 @@ public class UserRestController {
     @Autowired
     private IStatusService statusService;
 
+    @Autowired
+    IMessageManagerService messageManagerService;
 
     @GetMapping(value = "/all")
     public List<User> getAll(){
@@ -47,14 +47,14 @@ public class UserRestController {
     public ResponseEntity<Object> update(@RequestBody User user) throws ApiException {
 
         if (user.getUsername() == null)
-            throw new ApiException(HttpStatus.BAD_REQUEST, "El campo 'username' es NULL");
+            throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_NULL_USERNAME));
         if (user.getPassword() == null)
-            throw new ApiException(HttpStatus.BAD_REQUEST, "El campo 'password' es NULL");
+            throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_NULL_PASSWORD));
         if (user.getEmail() == null)
-            throw new ApiException(HttpStatus.BAD_REQUEST, "El campo 'email' es NULL");
+            throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_NULL_EMAIL));
 
         if (user.getPerson() == null)
-            throw new ApiException(HttpStatus.BAD_REQUEST, "El campo 'person' es NULL");
+            throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_NULL_PERSON));
         Person person  = personService.get(user.getPerson().getId_person());
         if (person == null) {
             // Exception persona no registrada
@@ -62,7 +62,7 @@ public class UserRestController {
         }
 
         if (user.getStatus() == null)
-            throw new ApiException(HttpStatus.BAD_REQUEST, "El campo 'status' es NULL");
+            throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_NULL_STATUS));
         Status status = statusService.get(user.getStatus().getId_status());
         if (status == null) {
             // Exception status no registrado
@@ -70,7 +70,7 @@ public class UserRestController {
         }
 
         if (user.getRol() == null)
-            throw new ApiException(HttpStatus.BAD_REQUEST, "El campo 'rol' es NULL");
+            throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_NULL_ROL));
         Rol rol = rolService.get(user.getRol().getId_rol());
         if (rol == null) {
             //Exception rol no registrado
@@ -88,8 +88,16 @@ public class UserRestController {
     }
 
     @PostMapping(value = "/save")
-    public ResponseEntity<Object> save(@RequestBody User user){
-         Person person  = personService.get(user.getPerson().getId_person());
+    public ResponseEntity<Object> save(@RequestBody User user) throws ApiException {
+
+        if (user.getUsername() == null)
+            throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_NULL_USERNAME));
+        if (user.getPassword() == null)
+            throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_NULL_PASSWORD));
+        if (user.getEmail() == null)
+            throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_NULL_EMAIL));
+
+        Person person  = personService.get(user.getPerson().getId_person());
          if (person == null) {
              // Exception persona no registrada
              person = personService.save(user.getPerson());
@@ -133,12 +141,12 @@ public class UserRestController {
     }*/
 
     @GetMapping(value = "/updatePassword")
-    public ResponseEntity<Object> updatePassword(@PathVariable Long id){
+    public ResponseEntity<Object> updatePassword(@PathVariable String password){
         return new ResponseEntity<Object>(null,HttpStatus.OK);
     }
 
     @GetMapping(value = "/restorePassword")
-    public ResponseEntity<Object> restorePassword(@PathVariable String password){
+    public ResponseEntity<Object> restorePassword(@PathVariable Long id){
         return new ResponseEntity<Object>(null,HttpStatus.OK);
     }
 

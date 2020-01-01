@@ -1,4 +1,4 @@
-package com.caaguirre.exception.model;
+package com.caaguirre.model.exception;
 
 import org.springframework.http.HttpStatus;
 

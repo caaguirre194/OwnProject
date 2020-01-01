@@ -1,7 +1,6 @@
-package com.caaguirre.controller.error;
+package com.caaguirre.controller.exception;
 
-import com.caaguirre.exception.model.ApiException;
-import com.caaguirre.exception.web.ApiMessage;
+import com.caaguirre.model.exception.ApiException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -25,7 +24,7 @@ import java.util.List;
 //@RestControllerAdvice(basePackages = {"com.caaguirre.controller.rest"})
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice
-public class GlobalRestErrorController extends ResponseEntityExceptionHandler {
+public class GlobalRestExceptionController extends ResponseEntityExceptionHandler {
 
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @ExceptionHandler({ConstraintViolationException.class})

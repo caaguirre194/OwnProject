@@ -1,4 +1,4 @@
-package com.caaguirre.exception.web;
+package com.caaguirre.controller.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.http.HttpStatus;
@@ -44,7 +44,6 @@ public class ApiMessage {
         this.code = status.value();
         this.message = message;
         this.debugMessage = ex.getLocalizedMessage();
-
     }
 
     public HttpStatus getStatus() {
