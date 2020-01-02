@@ -5,8 +5,8 @@ import com.caaguirre.model.exception.UserConstantException;
 import com.caaguirre.model.security.JwtRequest;
 import com.caaguirre.model.security.JwtResponse;
 import com.caaguirre.security.JwtTokenUtil;
+import com.caaguirre.security.JwtUserDetailsService;
 import com.caaguirre.service.IMessageManagerService;
-import com.caaguirre.service.security.JwtUserDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

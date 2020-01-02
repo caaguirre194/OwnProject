@@ -29,8 +29,4 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements I
         return userRepository.findByEmail(email);
     }
 
-    @Override
-    public User save(User entity) {
-        return super.save(entity);
-    }
 }

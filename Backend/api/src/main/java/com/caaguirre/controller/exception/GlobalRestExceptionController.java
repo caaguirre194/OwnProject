@@ -1,5 +1,6 @@
 package com.caaguirre.controller.exception;
 
+import com.caaguirre.controller.rest.UserRestController;
 import com.caaguirre.model.exception.ApiException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.core.Ordered;
@@ -23,7 +24,7 @@ import java.util.List;
 //@EnableAutoConfiguration(exclude = { WebMvcAutoConfiguration.class })
 //@RestControllerAdvice(basePackages = {"com.caaguirre.controller.rest"})
 @Order(Ordered.HIGHEST_PRECEDENCE)
-@RestControllerAdvice
+@RestControllerAdvice()
 public class GlobalRestExceptionController extends ResponseEntityExceptionHandler {
 
     @Order(Ordered.HIGHEST_PRECEDENCE)

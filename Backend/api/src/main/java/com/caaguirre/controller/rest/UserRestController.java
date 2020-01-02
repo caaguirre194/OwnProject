@@ -103,12 +103,17 @@ public class UserRestController {
              person = personService.save(user.getPerson());
          }
 
-            Status status = statusService.get(user.getStatus().getId_status());
+        if (user.getStatus() == null)
+            throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_NULL_STATUS));
+        Status status = statusService.get(user.getStatus().getId_status());
             if (status == null) {
                 // Exception status no registrado
                 status = statusService.save(user.getStatus());
             }
-            Rol rol = rolService.get(user.getRol().getId_rol());
+
+        if (user.getRol() == null)
+            throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_NULL_ROL));
+        Rol rol = rolService.get(user.getRol().getId_rol());
             if (rol == null) {
                 //Exception rol no registrado
                 rol = rolService.save(user.getRol());
