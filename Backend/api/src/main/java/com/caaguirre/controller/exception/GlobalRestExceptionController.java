@@ -1,6 +1,5 @@
 package com.caaguirre.controller.exception;
 
-import com.caaguirre.controller.rest.UserRestController;
 import com.caaguirre.model.exception.ApiException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.core.Ordered;
