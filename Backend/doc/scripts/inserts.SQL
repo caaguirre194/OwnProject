@@ -28,4 +28,4 @@ INSERT INTO public.person(
 
 INSERT INTO public."user"(
 	id_user, rol, status, person, username, email, "password")
-	VALUES (1, 1, 1, 1, 'caaguirre194', 'caaguirre194@gmail.com', '123');
+	VALUES (1, 1, 1, 1, 'caaguirre194', 'caaguirre194@gmail.com', '$2a$10$A6EDlXO1ngHo54ELYx6sQeZ89LeDycxccgYiZijOjRMx7vIEhNNBi');

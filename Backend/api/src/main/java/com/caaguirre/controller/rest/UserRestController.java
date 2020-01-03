@@ -97,12 +97,26 @@ public class UserRestController {
     @PostMapping(value = "/save")
     public ResponseEntity<Object> save(@RequestBody User user) throws ApiException {
 
-        if (user.getUsername() == null)
+        if (user.getUsername() == null) {
             throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_NULL_USERNAME));
+        } else {
+            User us = userService.findByUsername(user.getUsername());
+            if (us != null) {
+                throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_USERNAME_IS_REGISTER));
+            }
+        }
+
+        if (user.getEmail() == null) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_NULL_EMAIL));
+        }else {
+            User us = userService.findByEmail(user.getEmail());
+            if (us != null) {
+                throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_EMAIL_IS_REGISTER));
+            }
+        }
+
         if (user.getPassword() == null)
             throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_NULL_PASSWORD));
-        if (user.getEmail() == null)
-            throw new ApiException(HttpStatus.BAD_REQUEST, messageManagerService.getValue(UserConstantException.KEY_USER_NULL_EMAIL));
 
          Person person  = personService.get(user.getPerson().getId_person());
          if (person == null) {
