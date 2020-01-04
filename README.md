@@ -1,6 +1,6 @@
 # Api Rest 
 Este proyecto es una **API REST** desarrollada en Spring boot con PostgreSQL que se consume de lado del cliente con una plantilla de Angular.js
-## GO-ANGULAR:
+## Spring Boot - Angular:
  ![GitHub](/img/spring-angular.png)
  
 Using:
